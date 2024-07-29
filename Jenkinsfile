@@ -8,18 +8,31 @@ pipeline {
     }
 
     stages {
-        stage('Clone repository') {
+        stage('Checkout') {
             steps {
-                git credentialsId: "${CREDENTIALS_ID}", url: "${REPO_URL}"
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']], 
+                          doGenerateSubmoduleConfigurations: false, 
+                          extensions: [], 
+                          submoduleCfg: [], 
+                          userRemoteConfigs: [[url: "${REPO_URL}"]]])
             }
         }
+        // stage('Clone repository') {
+        //     steps {
+        //         git credentialsId: "${CREDENTIALS_ID}", url: "${REPO_URL}"
+        //     }
+        // }
         stage('Build Docker images') {
             steps {
+                echo "Starting docker compose build"
                 sh "docker-compose -f ${DOCKER_COMPOSE_FILE} build"
+                echo "Ending docker compose build"
             }
         }
         stage('Deploy application') {
             steps {
+                echo "Initializing deploy application"
                 sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
             }
         }
