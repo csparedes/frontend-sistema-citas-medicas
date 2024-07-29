@@ -34,14 +34,14 @@ pipeline {
         stage('Build Docker images') {
             steps {
                 echo "Starting docker compose build"
-                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} build"
+                sh "docker-compose build"
                 echo "Ending docker compose build"
             }
         }
         stage('Deploy application') {
             steps {
                 echo "Initializing deploy application"
-                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                sh "docker-compose up"
             }
         }
     }
