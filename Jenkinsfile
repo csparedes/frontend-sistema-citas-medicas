@@ -2,24 +2,23 @@ pipeline {
     agent any
 
     environment {
-        // Define environment variables if needed
-        NODE_ENV='develop'
+        DOCKER_COMPOSE_FILE = "docker-compose.yml"
     }
 
     stages {
         stage('Clone repository') {
             steps {
-                // git credentialsId: 'YOUR_CREDENTIALS_ID', url: 'YOUR_REPO_URL'
-                git url: 'https://github.com/csparedes/frontend-sistema-citas-medicas.git'
+                git credentialsId: 'YOUR_CREDENTIALS_ID', url: 'YOUR_REPO_URL'
             }
         }
-        stage('Build and Deploy') {
+        stage('Build Docker images') {
             steps {
-                script {
-                    def composeFile = "docker-compose.yml"
-                    sh "docker-compose build"
-                    sh "docker-compose up -d"
-                }
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} build"
+            }
+        }
+        stage('Deploy application') {
+            steps {
+                sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
             }
         }
     }
