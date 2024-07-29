@@ -23,10 +23,10 @@ pipeline {
             steps {
                 sh 'echo $PATH'
                 sh 'which git'
-                sh 'which node'
+                // sh 'which node'
                 sh 'which docker'
                 sh 'git --version'
-                sh 'node --version'
+                // sh 'node --version'
                 sh 'docker --version'
             }
         }
