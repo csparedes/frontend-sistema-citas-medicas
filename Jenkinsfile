@@ -3,12 +3,14 @@ pipeline {
 
     environment {
         DOCKER_COMPOSE_FILE = "docker-compose.yml"
+        CREDENTIALS_ID = "a5758983-b389-4ddb-af56-3cc06b5700ae"
+        REPO_URL = "https://github.com/csparedes/frontend-sistema-citas-medicas.git"
     }
 
     stages {
         stage('Clone repository') {
             steps {
-                git credentialsId: 'YOUR_CREDENTIALS_ID', url: 'YOUR_REPO_URL'
+                git credentialsId: '${CREDENTIALS_ID}', url: '${REPO_URL}'
             }
         }
         stage('Build Docker images') {
