@@ -4,6 +4,8 @@ import TheWelcome from '../components/TheWelcome.vue'
 
 <template>
   <main>
+
+    <p>Nos funcionó el commit</p>
     <TheWelcome />
   </main>
 </template>
