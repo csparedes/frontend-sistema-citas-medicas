@@ -2,21 +2,20 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_COMPOSE_FILE = "docker-compose.yml"
+        DOCKER_COMPOSE_FILE = "docker-compose.yaml"
         CREDENTIALS_ID = "a5758983-b389-4ddb-af56-3cc06b5700ae"
         REPO_URL = "https://github.com/csparedes/frontend-sistema-citas-medicas.git"
     }
 
     stages {
         stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: '*/main']], 
-                          doGenerateSubmoduleConfigurations: false, 
-                          extensions: [], 
-                          submoduleCfg: [], 
-                          userRemoteConfigs: [[url: "${REPO_URL}"]]])
-            }
+            def scmVars = checkout([$class: 'GitSCM', 
+                                            branches: [[name: '*/main']], 
+                                            doGenerateSubmoduleConfigurations: false, 
+                                            extensions: [], 
+                                            submoduleCfg: [], 
+                                            userRemoteConfigs: [[url: "${REPO_URL}"]]])
+            echo "Checked out revision: ${scmVars.GIT_COMMIT}"
         }
         // stage('Clone repository') {
         //     steps {

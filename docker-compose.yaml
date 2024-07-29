@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  frontend-citas-medicas:
+    container_name: frontend-citas-medicas
+    restart: on-failure
+    build: .
+    ports:
+      - 15001:80
