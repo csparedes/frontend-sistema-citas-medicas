@@ -9,19 +9,28 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            def scmVars = checkout([$class: 'GitSCM', 
-                                            branches: [[name: '*/main']], 
-                                            doGenerateSubmoduleConfigurations: false, 
-                                            extensions: [], 
-                                            submoduleCfg: [], 
-                                            userRemoteConfigs: [[url: "${REPO_URL}"]]])
-            echo "Checked out revision: ${scmVars.GIT_COMMIT}"
+            steps {
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/main']], 
+                          doGenerateSubmoduleConfigurations: false, 
+                          extensions: [], 
+                          submoduleCfg: [], 
+                          userRemoteConfigs: [[url: "${REPO_URL}"]]])
+            }
         }
-        // stage('Clone repository') {
-        //     steps {
-        //         git credentialsId: "${CREDENTIALS_ID}", url: "${REPO_URL}"
-        //     }
-        // }
+        
+        stage('Diagnose') {
+            steps {
+                sh 'echo $PATH'
+                sh 'which git'
+                sh 'which node'
+                sh 'which docker'
+                sh 'git --version'
+                sh 'node --version'
+                sh 'docker --version'
+            }
+        }
+
         stage('Build Docker images') {
             steps {
                 echo "Starting docker compose build"
