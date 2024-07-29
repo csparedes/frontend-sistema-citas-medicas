@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git credentialsId: ${CREDENTIALS_ID}, url: ${REPO_URL}
+                git credentialsId: "${CREDENTIALS_ID}", url: "${REPO_URL}"
             }
         }
         stage('Build Docker images') {
