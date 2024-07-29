@@ -34,14 +34,14 @@ pipeline {
         stage('Build Docker images') {
             steps {
                 echo "Starting docker compose build"
-                sh "docker-compose build"
+                sh "docker compose build"
                 echo "Ending docker compose build"
             }
         }
         stage('Deploy application') {
             steps {
                 echo "Initializing deploy application"
-                sh "docker-compose up"
+                sh "docker compose up"
             }
         }
     }
